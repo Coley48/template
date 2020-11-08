@@ -1,0 +1,44 @@
+{
+  "name": "template",
+  "version": "1.0.0",
+  "description": "A general front-end development template.",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "less": "lessc .\\src\\css\\style.less .\\dist\\css\\style.css",
+    "start": "webpack-dev-server",
+    "pack": "webpack .\\src\\index.js -o .\\dist\\bundle.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Coley48/template.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Coley48/template/issues"
+  },
+  "homepage": "https://github.com/Coley48/template#readme",
+  "browserslist": [
+    "last 4 versions"
+  ],
+  "devDependencies": {
+    "autoprefixer": "^10.0.1",
+    "css-loader": "^5.0.1",
+    "html-webpack-plugin": "^4.5.0",
+    "less": "^3.12.2",
+    "less-loader": "^7.0.2",
+    "postcss-loader": "^4.0.4",
+    "style-loader": "^2.0.0",
+    "webpack": "^5.3.2",
+    "webpack-cli": "^3.3.9",
+    "webpack-dev-server": "^3.11.0"
+  },
+  "dependencies": {
+    "jquery": "^3.5.1"
+  }
+}
