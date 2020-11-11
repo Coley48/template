@@ -1,14 +1,19 @@
 const { merge } = require('webpack-merge');
 const common = require('./webpack.common.js');
+const webpack = require('webpack');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const webpack = require('webpack');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const WorkboxPlugin = require('workbox-webpack-plugin');
 
 
 module.exports = merge(common, {
     mode: 'production',
     // devtool: "cheap-module-source-map",
+    output: {
+        // publicPath: 'static/',
+        publicPath: '',
+    },
     plugins: [
         new CleanWebpackPlugin(),
         new MiniCssExtractPlugin({
@@ -26,7 +31,11 @@ module.exports = merge(common, {
                 preset: ['default', { discardComments: { removeAll: true } }],
             },
             canPrint: true
-        })
+        }),
+        new WorkboxPlugin.GenerateSW({
+            clientsClaim: true,
+            skipWaiting: true,
+        }),
     ],
     module: {
         rules: [

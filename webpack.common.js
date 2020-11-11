@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack');
 
 module.exports = {
     entry: {
@@ -10,7 +11,6 @@ module.exports = {
         filename: '[name].[chunkhash].bundle.js',
         path: path.resolve(__dirname, 'dist'),
         pathinfo: false,
-        publicPath: ''
     },
     module: {
         rules: [
@@ -28,10 +28,24 @@ module.exports = {
                 use: [
                     'file-loader'
                 ]
+            },
+            {
+                test: /\.m?js$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['@babel/preset-env'],
+                        cacheDirectory: true
+                    }
+                }
             }
         ]
     },
     plugins: [
+        new webpack.ProvidePlugin({
+            $: "jquery"
+        }),
         new HtmlWebpackPlugin({
             filename: 'index.html',
             template: './test/index.html'
@@ -42,6 +56,7 @@ module.exports = {
         }),
     ],
     optimization: {
+        // moduleIds: 'hashed',
         splitChunks: {
             minSize: 30,
             cacheGroups: {
