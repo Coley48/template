@@ -4,21 +4,21 @@
 
 # nodejs
 
-##立即终止
+## 立即终止
 process.exit(1) 1表示非正常结束
 process.kill(process.pid, 'SIGKILL')
 
-##正常终止	
+## 正常终止	
 process.kill(process.pid, 'SIGTERM')
 
-##获取环境变量
+## 获取环境变量
 process.env
 
-##获取命令行参数
+## 获取命令行参数
 process.argv，该属性是一个包含所有命令行调用参数的数组。第一个参数是 node 命令的完整路径，第二个参数是正被执行的文件的完整路径，所有其他的参数从第三个位置开始。参数处理库：minimist；
 
 
-##
+## REPL
 对象.+tab 查看所有方法和属性名
 
 _ 变量，输出上一次打印的值
@@ -32,13 +32,13 @@ _ 变量，输出上一次打印的值
 .exit: 退出 REPL（相当于按下两次 ctrl-C）。
 
 
-##console格式化输出
+## console格式化输出
 %s 会格式化变量为字符串
 %d 会格式化变量为数字
 %i 会格式化变量为其整数部分
 %o 会格式化变量为对象
 
-##元素计数
+## 元素计数
 console.count 方法会对打印的字符串的次数进行计数，并在其旁边打印计数：
 console.trace 打印函数的调用堆栈踪迹;
 使用 console.time() 和 console.timeEnd() 轻松地计算函数运行所需的时间;
@@ -50,29 +50,29 @@ console.trace 打印函数的调用堆栈踪迹;
 
 使用module.exports 添加公开的属性方法
 
-#npm
+# npm
 
-##下载软件包
+## 下载软件包
 npm install
 
-###生产模式安装
+### 生产模式安装
 -S/--save 安装并添加条目到 package.json 文件的 dependencies。npm5以上自动完成；
-###开发模式安装
+### 开发模式安装
 -D/--save-dev 安装并添加条目到 package.json 文件的 devDependencies。
 --production 只安装生产环境依赖的包
 
-##更新软件包
+## 更新软件包
 npm update
 
-##运行脚本
+## 运行脚本
 npm run command
 command是 package.js 下的script属性内的子属性名
 
-##本地安装
+## 本地安装
 npm install package
 软件包会被安装到当前文件树中的 node_modules 子文件夹下。
 
-##全局安装
+## 全局安装
 npm install -g package
 
 开发模式安装
@@ -129,9 +129,9 @@ forever
 nodemon
 
 
-#package.json
+# package.json
 
-##属性及含义
+## 属性及含义
 name：设置软件包的名称。
 
 author：列出软件包的作者名称。
@@ -164,7 +164,7 @@ devDependencies：设置作为开发依赖安装的 npm 软件包的列表。
 browserslist：用于告知要支持哪些浏览器（及其版本）。 Babel、Autoprefixer 和其他工具会用到它，以将所需的 polyfill 和 fallback 添加到目标浏览器。
 
 
-##软件包版本说明符
+## 软件包版本说明符
 ~: 如果写入的是 〜0.13.0，则只更新补丁版本：即 0.13.1 可以，但 0.14.0 不可以。
 ^: 如果写入的是 ^0.13.0，则要更新补丁版本和次版本：即 0.13.1、0.14.0、依此类推。
 *: 如果写入的是 *，则表示接受所有的更新，包括主版本升级。
@@ -212,22 +212,22 @@ Error 优先回调（error-first callback）
 
 
 
-#webpack
+# webpack
 
-##安装
+## 安装
 npm install webpack -D
 npm install webpack-cli -D
 npm install webpack-dev-server -D
 
-##webpack打包
+## webpack打包
 npx webpack
 npx webpack .\src\main.js -o .\dist\bundle.js
 
-##开启本地服务器
+## 开启本地服务器
 npx webpack-dev-server --open --port 80 --contentBase src --hot
 
 
-##常用loader
+## 常用loader
 css-loader
 style-loader
 less-loader
@@ -236,17 +236,17 @@ file-loader
 postcss-loader
 sass-loader
 
-##安装babel
+## 安装babel
 npm install --save-dev @babel/core @babel/cli @babel/preset-env
 npm install --save @babel/polyfill
 
-##转换js代码
+## 转换js代码
 ./node_modules/.bin/babel src --out-dir lib
 npx babel src --out-dir lib
 
 
 
-#CommonJS
+# CommonJS
 
 模块在第一次加载后会被缓存。 这也意味着（类似其他缓存机制）如果每次调用 require('foo') 都解析到同一文件，则返回相同的对象。
 
