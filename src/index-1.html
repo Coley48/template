@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>index</title>
+</head>
+<body>
+    <h1>Hello, world.</h1>
+
+    <hr>
+    <div id="app">
+        <!-- 插值 -->
+        <div v-cloak>{{number+10}}</div>
+
+        <!-- 一次性渲染 -->
+        <!-- <span v-once>这个将不会改变: {{ msg }}</span> -->
+
+        <!-- 原始HTML -->
+        <div v-html="html"></div>
+
+        <!-- 动态绑定属性 -->
+        <!-- <div v-bind:class="style">Hello, world. one</div> -->
+        <!-- <div v-bind:id="'list-' + id"></div> -->
+        <!-- 简写 -->
+        <div :class="style">Hello, world. two</div>
+        <!-- 绑定多个类 -->
+        <!-- <div :class="{'A':true,'C':true}">Hello, world. three</div> -->
+        <div :class="classObj">Hello, world. three</div>
+
+        <hr>
+        <!-- 条件渲染 -->
+        <!-- 如果需要非常频繁地切换，则使用 v-show 较好；如果在运行时条件很少改变，则使用 v-if 较好 -->
+        <div v-if="isLogin">Welcome!</div>
+        <div v-else>Login first, please!</div>
+
+        <div v-if="code === 0">code === 0</div>
+        <div v-else-if="code === 1">code === 1</div>
+        <div v-else>code === 2</div>
+
+        <div v-show="isShow">isShow : {{isShow}}</div>
+
+        <hr>
+        <!-- 事件绑定 -->
+        <div>{{count}}</div>
+        <!-- <button v-on:click="count++">add one</button> -->
+        <!-- <button v-on:click="add">add one</button> -->
+        <button v-on:click="add($event,12)">add one</button>
+        <!-- 缩写 -->
+        <!-- <button @click="add($event,12)">add one</button> -->
+
+
+        <!-- 事件修饰符 -->
+        <div>
+        <!-- 阻止单击事件继续传播 -->
+            <a v-on:click.stop="handler">v-on:click.stop</a>
+            
+        <!-- 提交事件不再重载页面 -->
+        <form v-on:submit.prevent="handler">v-on:submit.prevent</form>
+        
+        <!-- 修饰符可以串联 -->
+        <a v-on:click.stop.prevent="handler">v-on:click.stop.prevent</a>
+        
+        <!-- 只有修饰符 -->
+        <form v-on:submit.prevent>v-on:submit.prevent</form>
+
+        <!-- 添加事件监听器时使用事件捕获模式 -->
+        <!-- 即内部元素触发的事件先在此处理，然后才交由内部元素进行处理 -->
+        <div v-on:click.capture="handler">v-on:click.capture="handler"</div>
+
+        <!-- 只当在 event.target 是当前元素自身时触发处理函数 -->
+        <!-- 即事件不是从内部元素触发的 -->
+        <div v-on:click.self="handler">v-on:click.self="handler"</div>
+    </div>
+
+
+        <hr>
+        <!-- 循环 -->
+        <div>
+            <ul>
+                <!-- 循环数组 -->
+                <li v-for="item,index in arr" :key="index">{{index}} : {{item}}</li>
+                <!-- 循环对象 -->
+                <li v-for="value,key in obj" :key="key">{{key}} : {{value}}</li>
+            </ul>
+        </div>
+
+        <!-- v-for 中使用计算属性 -->
+        <!-- <li v-for="n in evenNumbers">{{ n }}</li> -->
+
+        <!-- v-for 中使用函数 -->
+        <!-- <li v-for="n in even(set)">{{ n }}</li> -->
+
+        <!-- v-for 中使用范围 -->
+        <div>
+            <span v-for="n in 10">{{ n }} </span>
+        </div>
+
+        <!-- 在template中使用v-for -->
+        <!-- <ul>
+            <template v-for="item in items">
+                <li>{{ item.msg }}</li>
+                <li class="divider" role="presentation"></li>
+            </template>
+        </ul> -->
+
+        <!-- 双向数据绑定 -->
+        <div>
+            <h3>{{text}}</h3>
+            <input type="text" v-model="text">
+
+            <h3>{{radio}}</h3>
+            <input type="radio" v-model="radio" value="male">male
+            <input type="radio" v-model="radio" value="famale">famale
+
+            <h3>{{checkbox}}</h3>
+            <input type="checkbox" v-model="checkbox" value="apple">apple
+            <input type="checkbox" v-model="checkbox" value="orange">orange
+            <input type="checkbox" v-model="checkbox" value="bear">bear
+
+            <h3>单个复选框，绑定到布尔值</h3>
+            <input type="checkbox" id="checkbox" v-model="checked">
+            <label for="checkbox">{{ checked }}</label>
+
+            <br>
+            <h3>Selected: {{ selected }}</h3>
+            <select v-model="selected" ref="testRef">
+                <option disabled value="">请选择</option>
+                <option>A</option>
+                <option>B</option>
+                <option>C</option>
+            </select>
+
+            <!-- 修饰符 -->
+            <!-- .lazy -->
+            <!-- .number -->
+            <!-- .trim -->
+        </div>
+
+        <!--组件 -->
+        <demo-1></demo-1>
+        <demo-2 title="局部组件-1" content="lorem..."></demo-2>
+        <demo-2 title="组件-2" content="lorem...">
+            <input type="text">
+            <button>click</button>
+        </demo-2>
+
+        <div v-for="li in list">
+            <demo-3 :item="li" :key="li.id" index="1"></demo-3>
+        </div>
+
+        <div>
+            <h3>demo-4</h3>
+            <!-- <demo-4 :obj="obj" :text-content.prop="obj.name"></demo-4> -->
+        </div>
+
+        <div>
+            <h3>hello.vue</h3>
+            <my-component></my-component>
+        </div>
+
+        <div v-pre>
+            不编译部分：{{obj}}
+        </div>
+        <!-- <div id="blog-posts-events-demo">
+            <div :style="{ fontSize: postFontSize + 'em' }">
+                <p>如果父元素监听事件处理函数为表达式，则父元素可以通过$event参数获取第二个参数值 </p>
+                <blog-post v-for="post in posts" :key="post.id" :post="post" @enlarge-text="postFontSize += $event">
+                <p>如果父元素监听事件处理函数为一个方法，则该参数作为处理函数的第一参数传递</p>
+
+                <p><blog-post v-for="post in posts" :key="post.id" :post="post" @enlarge-text="handler"></p>
+
+                    <p>向上传递事件名称和一个可选的参数值</p>
+                    <button v-on:click="$emit('enlarge-text',1)">
+                        Enlarge text
+                    </button>
+                </blog-post>
+            </div>
+        </div> -->
+
+
+        <!-- 组件会在 `currentTabComponent` 改变时改变 -->
+        <!-- <component v-bind:is="currentTabComponent"></component> -->
+        
+        <!-- 可以把一个 <template> 元素当做不可见的包裹元素，并在上面使用 v-if。最终的渲染结果将不包含 <template> 元素。 -->
+        <template v-if="false" >
+            <h1>Title</h1>
+            <p>Paragraph 1</p>
+            <p>Paragraph 2</p>
+        </template >
+
+        <!-- 计算属性 -->
+        <div>
+            <h3>{{text}}</h3>
+            <h3>{{reverseString}}</h3>
+            <h3>{{reverseFunction()}}</h3>
+        </div>
+
+
+        <div>
+            <h3>firstName: {{firstName}}</h3>
+            <h3>lastName: {{lastName}}</h3>
+            <h3>fullName: {{fullName}}</h3>
+
+            <br>
+            <button @click="changeName()">changeName</button>
+        </div>
+
+        <!-- 监听属性 watch -->
+        <div>
+            <textarea cols="30" rows="10" v-model="textB">{{textB}}</textarea>
+            <textarea cols="30" rows="10" v-model="text">{{text}}</textarea>
+        </div>
+
+
+        <!-- 过渡和动画 -->
+        <div>
+            <button v-on:click="isShow = !isShow">
+                Toggle
+            </button>
+            <transition name="slide-fade">
+                <p v-if="isShow">hello</p>
+            </transition>
+        </div>
+
+        <!-- JavaScript钩子
+        before-enter
+        enter
+        after-enter
+        enter-cancelled
+        before-leave
+        leave
+        after-leave
+        leave-cancelled -->
+
+        <div>
+            <anchored-heading level="1"><a href="#bottom">anchored-heading</a></anchored-heading>
+        </div>
+
+        <div>
+            <anchored-heading-2>#！@￥#@</anchored-heading-2>
+        </div>
+
+        <div>
+            <h3 :id="rawId | capitalize('arg-2')">过滤器 {{ rawId | capitalize }}</h3>
+        </div>
+
+        <!-- <hello>单文件组件</hello> -->
+        
+
+    </div>
+
+
+    <template id="temp">
+        <div>
+            <h2 class="title">{{title}}</h2>
+            <p class="content">{{content}}</p>
+            <!-- 插槽 接收组件标签中的内容 -->
+            <slot></slot>
+        </div>
+    </template>
+
+    <footer id="bottom" class="example"></footer>
+</body>
+</html>

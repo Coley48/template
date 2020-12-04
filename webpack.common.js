@@ -4,11 +4,11 @@ const webpack = require('webpack');
 
 module.exports = {
     entry: {
-        main: './test/index.js',
-        second: './test/second.js'
+        main: './src/index.js',
     },
     output: {
-        filename: '[name].[chunkhash].bundle.js',
+        // filename: '[name].[chunkhash].bundle.js',
+        filename: '[name].bundle.js',
         path: path.resolve(__dirname, 'dist'),
         pathinfo: false,
     },
@@ -19,7 +19,7 @@ module.exports = {
                 use: {
                     loader: 'url-loader',
                     options: {
-                        limit: 8192
+                        limit: 51200
                     }
                 }
             },
@@ -48,11 +48,7 @@ module.exports = {
         }),
         new HtmlWebpackPlugin({
             filename: 'index.html',
-            template: './test/index.html'
-        }),
-        new HtmlWebpackPlugin({
-            filename: 'second.html',
-            template: './test/second.html'
+            template: './src/index.html'
         }),
     ],
     optimization: {

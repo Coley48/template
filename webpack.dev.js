@@ -1,30 +1,51 @@
 const { merge } = require('webpack-merge');
 const common = require('./webpack.common.js');
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
 module.exports = merge(common, {
     mode: 'development',
-    devtool: 'cheap-module-eval-source-map',
+    devtool: 'source-map',
     output: {
         publicPath: '',
     },
     devServer: {
         open: true,
-        port: 80,
-        contentBase: 'test',
+        port: 8000,
+        // contentBase: 'src',
         hot: true,
     },
     module: {
         rules: [
             {
+                test: /\.vue$/,
+                loader: "vue-loader"
+            },
+            {
                 test: /\.css$/,
-                use: ['style-loader', 'css-loader', 'postcss-loader']
+                use: [
+                    'vue-style-loader',
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            esModule: false,
+                        }
+                    },
+                ]
+                // use: ['vue-style-loader', 'css-loader']
             },
             {
                 test: /\.less$/,
-                use: ['style-loader', 'css-loader', 'postcss-loader', 'less-loader']
-            }
+                use: [
+                    'vue-style-loader',
+                    'css-loader',
+                    'less-loader'
+                ]
+            },
         ]
     },
+    plugins: [
+        new VueLoaderPlugin()
+    ],
     optimization: {
         runtimeChunk: 'single'
     }

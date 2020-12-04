@@ -4,8 +4,7 @@ const webpack = require('webpack');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const WorkboxPlugin = require('workbox-webpack-plugin');
-
+// const WorkboxPlugin = require('workbox-webpack-plugin');
 
 module.exports = merge(common, {
     mode: 'production',
@@ -17,7 +16,8 @@ module.exports = merge(common, {
     plugins: [
         new CleanWebpackPlugin(),
         new MiniCssExtractPlugin({
-            filename: '[name].[contenthash].css'
+            filename: '[name].css'
+            // filename: '[name].[contenthash].css'
         }),
         new webpack.ids.HashedModuleIdsPlugin({
             hashFunction: 'sha256',
@@ -32,10 +32,10 @@ module.exports = merge(common, {
             },
             canPrint: true
         }),
-        new WorkboxPlugin.GenerateSW({
-            clientsClaim: true,
-            skipWaiting: true,
-        }),
+        // new WorkboxPlugin.GenerateSW({
+        //     clientsClaim: true,
+        //     skipWaiting: true,
+        // }),
     ],
     module: {
         rules: [
