@@ -1,32 +1,46 @@
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
 module.exports = {
     entry: {
-        main: './test/index.js',
-        second: './test/second.js'
+        main: './src/index.js',
     },
     output: {
-        filename: '[name].[chunkhash].bundle.js',
+        // filename: '[name].[chunkhash].bundle.js',
+        filename: 'js/[name].[hash:8].bundle.js',
         path: path.resolve(__dirname, 'dist'),
         pathinfo: false,
     },
     module: {
         rules: [
             {
+                test: /\.vue$/,
+                loader: "vue-loader"
+            },
+            {
                 test: /\.(png|jpg|svg|gif)$/,
                 use: {
                     loader: 'url-loader',
                     options: {
-                        limit: 8192
+                        limit: 8096,
+                        name: '[contenthash:8].[ext]',
+                        outputPath: 'img',
                     }
                 }
             },
             {
                 test: /\.(woff|woff2|eot|ttf|otf)$/,
                 use: [
-                    'file-loader'
+                    {
+                        loader: 'file-loader',
+                        options: {
+                            name: '[contenthash:8].[ext]',
+                            outputPath: 'font'
+                        }
+                    }
+
                 ]
             },
             {
@@ -36,7 +50,8 @@ module.exports = {
                     loader: 'babel-loader',
                     options: {
                         presets: ['@babel/preset-env'],
-                        cacheDirectory: true
+                        cacheDirectory: true,
+                        // outputPath: "js"
                     }
                 }
             }
@@ -48,12 +63,9 @@ module.exports = {
         }),
         new HtmlWebpackPlugin({
             filename: 'index.html',
-            template: './test/index.html'
+            template: './src/index.html'
         }),
-        new HtmlWebpackPlugin({
-            filename: 'second.html',
-            template: './test/second.html'
-        }),
+        new VueLoaderPlugin()
     ],
     optimization: {
         // moduleIds: 'hashed',

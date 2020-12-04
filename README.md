@@ -1,28 +1,211 @@
-# template
-通用的前端开发模板，node+webpack
+# webpack开发环境
+## webpack
+npm install webpack webpack-cli webpack-dev-server -D
+npm install webpack-chain -D
+npm install webpack-merge -D
+
+单独打包：npx webpack .\src\main.js -o .\dist\bundle.js
+
+## webpack loader -D
+file-loader 
+url-loader
+css-loader
+postcss-loader
+style-loader
+
+## webpack plugin -D
+html-webpack-plugin
+workbox-webpack-plugin
+optimize-css-assets-webpack-plugin
+mini-css-extract-plugin
+clean-webpack-plugin
+
+## vue
+vue
+vuex
+vue-loader
+vue-router
+vue-template-compiler
+
+vue-style-loader -D
+
+## babel
+npm install @babel/core @babel/cli @babel/preset-env -D
+npm install babel-loader -D
+
+转义输出：npx babel src --out-dir lib
+
+## less
+npm install less less-loader -D
+
+## other
+http-server -S
+autoprefixer -D
+
+## 错误总结
+1. PostCSS plugin autoprefixer requires PostCSS 8.
+npm install -D autoprefixer@9.0.0
 
 
-# nodejs
 
-## 立即终止
-process.exit(1) 1表示非正常结束
-process.kill(process.pid, 'SIGKILL')
+# git常用命令
 
-## 正常终止	
-process.kill(process.pid, 'SIGTERM')
+### 克隆仓库 `git clone <url>`
+```
+Cloning into 'git-test'...
+remote: Enumerating objects: 15, done.
+remote: Counting objects: 100% (15/15), done.
+remote: Compressing objects: 100% (11/11), done.
+remote: Total 15 (delta 3), reused 11 (delta 3), pack-reused 0
+Receiving objects: 100% (15/15), done.
+Resolving deltas: 100% (3/3), done.
+```
 
-## 获取环境变量
-process.env
+### 获取远程更新 `git fetch`
+`git fetch origin <BranchName>:<NewBranchName>`
+```
+From https://github.com/Coley48/git-test
+ * [new branch]      dev        -> temp
+```
 
-## 获取命令行参数
-process.argv，该属性是一个包含所有命令行调用参数的数组。第一个参数是 node 命令的完整路径，第二个参数是正被执行的文件的完整路径，所有其他的参数从第三个位置开始。参数处理库：minimist；
+### 比较分支 `git diff <BranchName>`
+```
+diff --git a/README.md b/README.md
+index 10b65fb..18c8c8d 100644
+--- a/README.md
++++ b/README.md
+@@ -1,36 +1,113 @@
+ # git-test
+
++用于测试git功能
+
+-# git command
+
+-获取
+:
+```
+
+### 添加文件追踪 `git add`
+
+`git add <FileName>` 添加单个或多个文件
+`git add .` 添加所有文件
 
 
-## REPL
-对象.+tab 查看所有方法和属性名
+### 提交文件并添加描述 `git commit -m "some descriptions"`
 
-_ 变量，输出上一次打印的值
+```
+[main 81ff1b6] mod readme.md
+ 1 file changed, 87 insertions(+), 1 deletion(-)
+ rewrite README.md (100%)
+ ```
 
+### 推送到远程服务器 `git push`
+
+```
+Enumerating objects: 5, done.
+Counting objects: 100% (5/5), done.
+Delta compression using up to 4 threads
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (3/3), 1.05 KiB | 76.00 KiB/s, done.
+Total 3 (delta 1), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (1/1), completed with 1 local object.
+To https://github.com/Coley48/git-test
+   12876d8..81ff1b6  main -> main
+```
+
+### 推送分支到远程服务器 `git push --set-upstream origin <BranchName>`
+```
+Total 0 (delta 0), reused 0 (delta 0), pack-reused 0
+remote:
+remote: Create a pull request for 'secondary' on GitHub by visiting:
+remote:      https://github.com/Coley48/git-test/pull/new/secondary
+remote:
+To https://github.com/Coley48/git-test
+ * [new branch]      secondary -> secondary
+Branch 'secondary' set up to track remote branch 'secondary' from 'origin'.
+```
+
+
+### 查看当前状态 `git status`
+
+```
+On branch main
+Your branch is up to date with 'origin/main'.
+
+nothing to commit, working tree clean
+```
+
+### 查看分支列表 `git branch`
+
+```
+  test
+  dev
+* main
+```
+
+### 创建分支 `git branch <BranchName>`
+
+
+### 切换分支 `git checkout <BranchName>`
+
+```
+Switched to branch 'main'
+M       README.md
+Your branch is up to date with 'origin/main'.
+```
+
+### 合并分支 `git merge <BranchName>`
+
+```
+error: Your local changes to the following files would be overwritten by merge:
+        README.md
+Please commit your changes or stash them before you merge.
+Aborting
+Updating 12876d8..a5b0277
+```
+
+### 创建并切换到该分支 `git checkout -b <BranchName>`
+
+```
+Switched to a new branch 'test'
+```
+
+### 删除分支  `git branch -d <BranchName>`
+
+```
+Deleted branch test (was 12876d8).
+```
+
+### 删除远程分支 `git push origin --delete <BranchName>`
+
+```
+To https://github.com/Coley48/git-test
+ - [deleted]         secondary
+ ```
+
+ ### 拉取更新 `git pull`
+
+ 相当于`git fetch` + `git merge`
+ ```
+ Already up to date.
+ ```
+
+# nodejs笔记
+
+### 命令
+`process.exit(1)` 1表示非正常结束
+`process.kill(process.pid, 'SIGKILL')` 立即终止
+`process.kill(process.pid, 'SIGTERM')` 正常终止
+`process.env` 获取环境变量
+`process.argv`，获取命令行参数，该属性是一个包含所有命令行调用参数的数组。第一个参数是 node 命令的完整路径，第二个参数是正被执行的文件的完整路径，所有其他的参数从第三个位置开始。参数处理库：minimist；
+
+
+### REPL
+Object.+`tab` 查看所有方法和属性名
+
+`_`变量，输出上一次打印的值
+
+```
 .help: 显示点命令的帮助。
 .editor: 启用编辑器模式，可以轻松地编写多行 JavaScript 代码。当处于此模式时，按下 ctrl-D 可以运行编写的代码。
 .break: 当输入多行的表达式时，输入 .break 命令可以中止进一步的输入。相当于按下 ctrl-C。
@@ -30,141 +213,66 @@ _ 变量，输出上一次打印的值
 .load: 加载 JavaScript 文件（相对于当前工作目录）。
 .save: 将在 REPL 会话中输入的所有内容保存到文件（需指定文件名）。
 .exit: 退出 REPL（相当于按下两次 ctrl-C）。
-
-
-## console格式化输出
-%s 会格式化变量为字符串
-%d 会格式化变量为数字
-%i 会格式化变量为其整数部分
-%o 会格式化变量为对象
-
-## 元素计数
-console.count 方法会对打印的字符串的次数进行计数，并在其旁边打印计数：
-console.trace 打印函数的调用堆栈踪迹;
-使用 console.time() 和 console.timeEnd() 轻松地计算函数运行所需的时间;
-转义序列打印有颜色的字体；console.log('\x1b[33m%s\x1b[0m', '你好')
-着色库：Chalk
-进度条库：progress
-使用 readline 模块接受命令行输入
-或者 inquirer 包
-
-使用module.exports 添加公开的属性方法
+```
 
 # npm
 
-## 下载软件包
-npm install
+### 下载软件包
+`npm install`
+-g 全局安装
+-S/--save 生产模式安装
+-D/--save-dev 开发模式依赖
+--production 只安装生产环境依赖
 
-### 生产模式安装
--S/--save 安装并添加条目到 package.json 文件的 dependencies。npm5以上自动完成；
-### 开发模式安装
--D/--save-dev 安装并添加条目到 package.json 文件的 devDependencies。
---production 只安装生产环境依赖的包
-
-## 更新软件包
-npm update
-
-## 运行脚本
-npm run command
-command是 package.js 下的script属性内的子属性名
-
-## 本地安装
-npm install package
-软件包会被安装到当前文件树中的 node_modules 子文件夹下。
-
-## 全局安装
-npm install -g package
-
-开发模式安装
-npm install --dev <PACKAGENAME>
-npm install -D
-
-查看全局安装位置
-npm root -g
-
-执行可运行的软件包
-npx package
-npx webpack -v 查看版本号
-
-查看所有已安装的npm软件包
-npm list
-查看全局安装的软件包
-npm list -g
-查看顶层的软件包
-npm list --depth=0
-
-查看指定软件包
-npm list package
+`npm update` 更新软件包
+`npm run <command>` 运行package.json/scripts中的脚本
+`npm root -g` 查看全局安装位置
+`npm list [-g]` 查看所有已安装的npm软件包
+`npm list --depth=0` 查看顶层的软件包
+`npm list package` 查看指定软件包
+`npm install package@x.x.x` 下载指定版本的软件包
+`npm view package versions` 查看软件包的历史版本
+`npm outdated` 对比新旧版本的软件包
+`npm uninstall <package>`卸载软件包
 
 
-下载指定版本的软件包
-npm install package@x.x.x
+# package.json说明
 
-查看软件包的历史版本
-npm view package versions
+### 属性及含义
+`name`：设置软件包的名称。
 
-对比新旧版本的软件包
-npm outdated
+`author`：列出软件包的作者名称。
 
-全局安装软件包：npm-check-updates
-安装：npm install -g npm-check-updates
-使用：ncu -u
+`contributors`：除作者外，该项目可以有一个或多个贡献者。 此属性是列出他们的数组。
 
-卸载软件包
-npm uninstall package
--S/--save 移除package.js中的引用
--D/--save-dev 移除开发依赖项
--g 全局
+`bugs`：链接到软件包的问题跟踪器，最常用的是 GitHub 的 issues 页面。
 
+`homepage`：设置软件包的主页。
 
-一些流行的全局软件包的示例有：
-npm
-create-react-app
-vue-cli
-grunt-cli
-mocha
-react-native-cli
-gatsby-cli
-forever
-nodemon
+`version`：指定软件包的当前版本。x.x.x 分别表示主版本号、次版本号、补丁版本号仅修复缺陷的版本是补丁版本，引入向后兼容的更改的版本是次版本，具有重大更改的是主版本
 
+`license`：指定软件包的许可证。
 
-# package.json
+`keywords`：此属性包含与软件包功能相关的关键字数组。
 
-## 属性及含义
-name：设置软件包的名称。
+`description`：此属性包含了对软件包的简短描述。
 
-author：列出软件包的作者名称。
+`repository`：此属性指定了此程序包仓库所在的位置。
 
-contributors：除作者外，该项目可以有一个或多个贡献者。 此属性是列出他们的数组。
+`main`：设置软件包的入口点。
 
-bugs：链接到软件包的问题跟踪器，最常用的是 GitHub 的 issues 页面。
+`private`：如果设置为 true，则可以防止应用程序/软件包被意外发布到 npm 上。
 
-homepage：设置软件包的主页。
+`scripts`：可以定义一组可以运行的 node 脚本。
 
-version：指定软件包的当前版本。x.x.x 分别表示主版本号、次版本号、补丁版本号仅修复缺陷的版本是补丁版本，引入向后兼容的更改的版本是次版本，具有重大更改的是主版本
+`dependencies`：设置作为依赖安装的 npm 软件包的列表。
 
-license：指定软件包的许可证。
+`devDependencies`：设置作为开发依赖安装的 npm 软件包的列表。
 
-keywords：此属性包含与软件包功能相关的关键字数组。
-
-description：此属性包含了对软件包的简短描述。
-
-repository：此属性指定了此程序包仓库所在的位置。
-
-main：设置软件包的入口点。
-
-private：如果设置为 true，则可以防止应用程序/软件包被意外发布到 npm 上。
-scripts：可以定义一组可以运行的 node 脚本。
-
-dependencies：设置作为依赖安装的 npm 软件包的列表。
-
-devDependencies：设置作为开发依赖安装的 npm 软件包的列表。
-
-browserslist：用于告知要支持哪些浏览器（及其版本）。 Babel、Autoprefixer 和其他工具会用到它，以将所需的 polyfill 和 fallback 添加到目标浏览器。
+`browserslist`：用于告知要支持哪些浏览器（及其版本）。 Babel、Autoprefixer 和其他工具会用到它，以将所需的 polyfill 和 fallback 添加到目标浏览器。
 
 
-## 软件包版本说明符
+### 软件包版本说明符
 ~: 如果写入的是 〜0.13.0，则只更新补丁版本：即 0.13.1 可以，但 0.14.0 不可以。
 ^: 如果写入的是 ^0.13.0，则要更新补丁版本和次版本：即 0.13.1、0.14.0、依此类推。
 *: 如果写入的是 *，则表示接受所有的更新，包括主版本升级。
@@ -176,6 +284,8 @@ browserslist：用于告知要支持哪些浏览器（及其版本）。 Babel�
 latest: 使用可用的最新版本。
 ||: 使用范围组合
 
+
+# 杂项
 每当事件循环进行一次完整的行程时，我们都将其称为一个滴答。
 当将一个函数传给 process.nextTick() 时，则指示引擎在当前操作结束（在下一个事件循环滴答开始之前）时调用此函数：process.nextTick(() => {})
 
@@ -190,6 +300,7 @@ promise 解决回调地狱的一种方式
 Promisifying 的技术能够使用经典的 JavaScript 函数来接受回调并使其返回 promise。
 const fs = require('fs')
 
+```
 const getFile = (fileName) => {
   return new Promise((resolve, reject) => {
     fs.readFile(fileName, (err, data) => {
@@ -205,45 +316,11 @@ const getFile = (fileName) => {
 getFile('/etc/passwd')
 .then(data => console.log(data))
 .catch(err => console.error(err))
+```
 
 Error 优先回调（error-first callback）
 1.callback 的第一个参数是为 error 而保留的。一旦出现 error，callback(err) 就会被调用。
 2.第二个参数（和下一个参数，如果需要的话）用于成功的结果。此时 callback(null, result1, result2…) 就会被调用。
-
-
-
-# webpack
-
-## 安装
-npm install webpack -D
-npm install webpack-cli -D
-npm install webpack-dev-server -D
-
-## webpack打包
-npx webpack
-npx webpack .\src\main.js -o .\dist\bundle.js
-
-## 开启本地服务器
-npx webpack-dev-server --open --port 80 --contentBase src --hot
-
-
-## 常用loader
-css-loader
-style-loader
-less-loader
-url-loader
-file-loader
-postcss-loader
-sass-loader
-
-## 安装babel
-npm install --save-dev @babel/core @babel/cli @babel/preset-env
-npm install --save @babel/polyfill
-
-## 转换js代码
-./node_modules/.bin/babel src --out-dir lib
-npx babel src --out-dir lib
-
 
 
 # CommonJS
