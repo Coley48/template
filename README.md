@@ -1,51 +1,70 @@
 # webpack开发环境
-## webpack
+## webpack -D
+- webpack
+- webpack-cli
+- webpack-dev-server
+- webpack-chain
+- webpack-merge
+
+```
 npm install webpack webpack-cli webpack-dev-server -D
 npm install webpack-chain -D
 npm install webpack-merge -D
+```
 
-单独打包：npx webpack .\src\main.js -o .\dist\bundle.js
+单独打包：`npx webpack .\src\main.js -o .\dist\bundle.js`
 
 ## webpack loader -D
-file-loader 
-url-loader
-css-loader
-postcss-loader
-style-loader
+- file-loader 
+- url-loader
+- css-loader
+- postcss-loader
+- style-loader
 
 ## webpack plugin -D
-html-webpack-plugin
-workbox-webpack-plugin
-optimize-css-assets-webpack-plugin
-mini-css-extract-plugin
-clean-webpack-plugin
+- html-webpack-plugin
+- workbox-webpack-plugin
+- optimize-css-assets-webpack-plugin
+- mini-css-extract-plugin
+- clean-webpack-plugin
 
-## vue
-vue
-vuex
-vue-loader
-vue-router
-vue-template-compiler
+## vue -S
+- vue
+- vuex
+- vue-loader
+- vue-router
+- vue-template-compiler
+- vue-style-loader -D
 
-vue-style-loader -D
+## babel -D
+- @babel/core
+- @babel/cli
+- @babel/preset-env
+- babel-loader
 
-## babel
+```
 npm install @babel/core @babel/cli @babel/preset-env -D
 npm install babel-loader -D
+```
 
-转义输出：npx babel src --out-dir lib
+转义输出：`npx babel src --out-dir lib`
 
-## less
+## less -D
+- less
+- less-loader
+
+```
 npm install less less-loader -D
-
+```
 ## other
-http-server -S
-autoprefixer -D
+-http-server -S
+- autoprefixer -D
 
 ## 错误总结
-1. PostCSS plugin autoprefixer requires PostCSS 8.
-npm install -D autoprefixer@9.0.0
-
+```
+报错：PostCSS plugin autoprefixer requires PostCSS 8.
+>>npm install -D autoprefixer@9.0.0
+```
 
 
 # git常用命令
@@ -194,9 +213,13 @@ To https://github.com/Coley48/git-test
 
 ### 命令
 `process.exit(1)` 1表示非正常结束
+
 `process.kill(process.pid, 'SIGKILL')` 立即终止
+
 `process.kill(process.pid, 'SIGTERM')` 正常终止
+
 `process.env` 获取环境变量
+
 `process.argv`，获取命令行参数，该属性是一个包含所有命令行调用参数的数组。第一个参数是 node 命令的完整路径，第二个参数是正被执行的文件的完整路径，所有其他的参数从第三个位置开始。参数处理库：minimist；
 
 
@@ -225,14 +248,23 @@ Object.+`tab` 查看所有方法和属性名
 --production 只安装生产环境依赖
 
 `npm update` 更新软件包
+
 `npm run <command>` 运行package.json/scripts中的脚本
+
 `npm root -g` 查看全局安装位置
+
 `npm list [-g]` 查看所有已安装的npm软件包
+
 `npm list --depth=0` 查看顶层的软件包
+
 `npm list package` 查看指定软件包
+
 `npm install package@x.x.x` 下载指定版本的软件包
+
 `npm view package versions` 查看软件包的历史版本
+
 `npm outdated` 对比新旧版本的软件包
+
 `npm uninstall <package>`卸载软件包
 
 
@@ -273,6 +305,7 @@ Object.+`tab` 查看所有方法和属性名
 
 
 ### 软件包版本说明符
+```
 ~: 如果写入的是 〜0.13.0，则只更新补丁版本：即 0.13.1 可以，但 0.14.0 不可以。
 ^: 如果写入的是 ^0.13.0，则要更新补丁版本和次版本：即 0.13.1、0.14.0、依此类推。
 *: 如果写入的是 *，则表示接受所有的更新，包括主版本升级。
@@ -283,7 +316,7 @@ Object.+`tab` 查看所有方法和属性名
 无符号: 仅接受指定的特定版本。
 latest: 使用可用的最新版本。
 ||: 使用范围组合
-
+```
 
 # 杂项
 每当事件循环进行一次完整的行程时，我们都将其称为一个滴答。
