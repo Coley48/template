@@ -1,51 +1,61 @@
-const { merge } = require('webpack-merge');
-const common = require('./webpack.common.js');
+const path = require("path");
+const htmlWebpackPlugin = require("html-webpack-plugin");
+const { VueLoaderPlugin } = require("vue-loader");
 
-module.exports = merge(common, {
-    mode: 'development',
-    devtool: 'source-map',
-    output: {
-        publicPath: '',
+module.exports = {
+    mode: "development",
+    entry: {
+        main: "./src/main.js",
     },
-    devServer: {
-        open: true,
-        port: 8000,
-        // contentBase: 'src',
-        hot: true,
+    output: {
+        publicPath: "",
+    },
+    devtool: "inline-source-map",
+    resolve: {
+        extensions: [".js", ".vue"],
+        alias: {
+            "@": "/src",
+        },
     },
     module: {
         rules: [
             {
-                test: /\.css$/,
-                use: [
-                    'vue-style-loader',
-                    {
-                        loader: 'css-loader',
-                        options: {
-                            esModule: false,
-                        }
-                    },
-                    'postcss-loader',
-                ]
+                test: /\.vue$/,
+                loader: "vue-loader",
             },
             {
-                test: /\.less$/,
-                use: [
-                    'vue-style-loader',
-                    {
-                        loader: 'css-loader',
-                        options: {
-                            esModule: false,
-                        }
-                    },
-                    'postcss-loader',
-                    'less-loader'
-                ]
+                test: /\.m?js$/,
+                exclude: /node_modules/,
+                use: "babel-loader",
             },
-        ]
+            {
+                test: /\.css$/i,
+                use: ["vue-style-loader", "css-loader"],
+            },
+            {
+                test: /\.less$/i,
+                use: ["vue-style-loader", "css-loader", "less-loader"],
+            },
+            {
+                test: /\.(png|svg|jpg|jpeg|gif)$/i,
+                type: "asset/resource",
+            },
+        ],
     },
+    plugins: [
+        new htmlWebpackPlugin({
+            title: "template document",
+            template: "./src/assets/index.html",
+        }),
+        new VueLoaderPlugin(),
+    ],
     optimization: {
-        runtimeChunk: 'single'
-    }
-
-});
+        runtimeChunk: "single",
+    },
+    devServer: {
+        compress: true,
+        port: 8000,
+        open: true,
+        hot: true,
+    },
+};

@@ -1,76 +1,68 @@
-const { merge } = require('webpack-merge');
-const common = require('./webpack.common.js');
-const webpack = require('webpack');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const WorkboxPlugin = require('workbox-webpack-plugin');
+const path = require("path");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+const htmlWebpackPlugin = require("html-webpack-plugin");
+const { VueLoaderPlugin } = require("vue-loader");
 
-// Progressive Web Application
-let isPWA = false;
-if (isPWA) {
-    common.plugins.push(new WorkboxPlugin.GenerateSW({
-        clientsClaim: true,
-        skipWaiting: true,
-    }));
-}
-
-module.exports = merge(common, {
-    mode: 'production',
+module.exports = {
+    mode: "production",
+    entry: {
+        main: "./src/main.js",
+    },
     output: {
-        // publicPath: 'static/',
-        publicPath: '',
+        path: path.resolve(__dirname, "dist"),
+        clean: true,
+    },
+    resolve: {
+        extensions: [".js", ".vue"],
+        alias: {
+            "@": "/src",
+        },
     },
     plugins: [
-        new CleanWebpackPlugin(),
-        new MiniCssExtractPlugin({
-            // filename: '[name].bundle.css',
-            filename: 'css/[name].[contenthash:8].css'
+        new htmlWebpackPlugin({
+            title: "template document",
+            template: "./src/assets/index.html",
         }),
-        // new webpack.ids.HashedModuleIdsPlugin({
-        //     hashFunction: 'sha256',
-        //     hashDigest: 'hex',
-        //     hashDigestLength: 8
-        // }),
-        new OptimizeCssAssetsPlugin({
-            assetNameRegExp: /\.css$/,
-            cssProcessor: require('cssnano'),
-            cssProcessorPluginOptions: {
-                preset: ['default', { discardComments: { removeAll: true } }],
-            },
-            canPrint: true
-        }),
+        new VueLoaderPlugin(),
+        new MiniCssExtractPlugin(),
     ],
     module: {
         rules: [
             {
-                test: /\.css$/,
-                sideEffects: true,
-                use: [
-                    {
-                        loader: MiniCssExtractPlugin.loader,
-                        options: {
-                            publicPath: "../"
-                        }
-                    },
-                    'css-loader',
-                    'postcss-loader'
-                ]
+                test: /\.vue$/,
+                loader: "vue-loader",
             },
             {
-                test: /\.less$/,
-                sideEffects: true,
+                test: /\.m?js$/,
+                exclude: /node_modules/,
+                use: "babel-loader",
+            },
+            {
+                test: /\.css$/i,
                 use: [
-                    {
-                        loader: MiniCssExtractPlugin.loader,
-                        options: {
-                            publicPath: "../"
-                        }
-                    },
-                    'css-loader',
-                    'postcss-loader',
-                    'less-loader']
-            }
-        ]
-    }
-});
+                    MiniCssExtractPlugin.loader,
+                    "css-loader",
+                    "postcss-loader",
+                ],
+            },
+            {
+                test: /\.less$/i,
+                use: [
+                    MiniCssExtractPlugin.loader,
+                    "css-loader",
+                    "postcss-loader",
+                    "less-loader",
+                ],
+            },
+            {
+                test: /\.(png|svg|jpg|jpeg|gif)$/i,
+                type: "asset/resource",
+            },
+        ],
+    },
+    optimization: {
+        // For webpack@5 use the `...` syntax to extend existing minimizers (i.e. `terser-webpack-plugin`)
+        minimizer: [`...`, new CssMinimizerPlugin()],
+    },
+};
