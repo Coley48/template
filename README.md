@@ -1,6 +1,6 @@
-# javascript
+# template
 
-该项目主要用于在学习 JavaScript 时编写测试代码；并做好相应笔记，同时该项目也是一个 JavaScript 模板库；
+该项目是一个 Vue 项目的模板仓库；
 
 ### 项目搭建
 
@@ -22,7 +22,9 @@ npm i -D @babel/core @babel/preset-env babel-loader
 npm i -D @babel/plugin-transform-runtime # async/await
 
 # 根据需要安装其他 loader 和 plugin；
-npm i -D style-loader css-loader html-webpack-plugin
+npm i -D style-loader css-loader html-webpack-plugin # vue 项目中 vue-style-loader 替代 style-loader
+npm i -D postcss-loader autoprefixer # css 后编译器
+npm i -D css-minimizer-webpack-plugin mini-css-extract-plugin # 提取 css
 ```
 
 - [html-webpack-plugin](https://www.npmjs.com/package/html-webpack-plugin)
@@ -44,3 +46,24 @@ npm i -D style-loader css-loader html-webpack-plugin
 ```
 
 5. 配置 Vue
+
+安装 vue vue-router vuex
+```sh
+npm i vue@2 vue-router vuex
+```
+
+安装 vue-loader vue-style-loader vue-template-compiler
+```sh
+npm i -D vue-loader vue-style-loader vue-template-compiler
+```
+
+需要注意版本号：
+```json
+ "vue-loader": "^15.9.6",
+ "vue-style-loader": "^4.1.3",
+ "vue-template-compiler": "^2.6.14",
+```
+
+- [vue 中 CSS 提取](https://vue-loader.vuejs.org/zh/guide/extract-css.html)
+- [CssMinimizerWebpackPlugin](https://webpack.docschina.org/plugins/css-minimizer-webpack-plugin/)
+- [MiniCssExtractPlugin](https://webpack.docschina.org/plugins/mini-css-extract-plugin/)
